@@ -30,7 +30,7 @@ void write_log(ofstream& file, const vector<tuple<int,int,int>>& squares) {
         if (idx < 26)
             c = 'A' + idx;          
         else if (idx < 52)
-            c = '1' + (idx - 26);   
+            c = 'a' + (idx - 26);   
         else
             c = '?';                 
 
