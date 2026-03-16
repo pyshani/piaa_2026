@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <fstream>
 #include <bitset>
-
+#include <unistd.h>
 #include <clocale>
 
 #include <ctime>
@@ -176,7 +176,7 @@ bool easy_way(int N){
     return false;
 }
 
-int main() {
+int main(int argc, char* argv[]) {
 
     ofstream outFile("output.log");
     ofstream graph_file("times.txt");
@@ -184,10 +184,25 @@ int main() {
     graph_log = false;
     bool time_log = false;
 
+    int opt;
+    while ((opt = getopt(argc, argv, "lg")) != -1) {
+        switch (opt) {
+            case 'l':
+                graph_log = true;
+                break;
+            case 'g':
+                time_log = true;
+                break;
+            default:
+                cerr << "Use: " << argv[0] << " [-l] [-g]" << endl;
+                return 1;
+        }
+    }
+
     vector<int> primes = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37};
 
     int time_cnt_iter = 1;
-    if (time_log) time_cnt_iter = 12;
+    if (time_log) time_cnt_iter = primes.size();
     else cin >> N;
     for(int i = 0; i < time_cnt_iter; i++){
         
@@ -218,16 +233,15 @@ int main() {
         place(0, first_size, first_size - 1, true, outFile);
 
 
-        squares_placed +=3;
+        squares_placed += 3;
 
         int used_area = first_size * first_size + 2 * ((first_size - 1)*(first_size - 1));
         
-        int remaining = total_area - used_area;
         int lower = squares_placed + 1;
         
 
         for (int limit = lower; limit < best_count; ++limit) {
-            if (backtrack(3, used_area, limit, outFile)) {
+            if (backtrack(squares_placed, used_area, limit, outFile)) {
                 break;                          
             }
         }
