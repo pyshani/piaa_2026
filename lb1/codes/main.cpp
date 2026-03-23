@@ -194,7 +194,7 @@ int main(int argc, char* argv[]) {
                 time_log = true;
                 break;
             default:
-                cerr << "Use: " << argv[0] << " [-l] [-g]" << endl;
+                cerr << "Use: " << argv[0] << " [-l] - log file [-g] graph file" << endl;
                 return 1;
         }
     }
