@@ -32,7 +32,7 @@ int tsp(int mask, int pos) {
     
     if (mask == (1 << n) - 1) {
         int ret = (graph[pos][0] != 0) ? graph[pos][0] : INF;
-        logFile << "  base = " << ret << "\n";
+        logFile << "  return = " << ret << "\n";
         return ret;
     }
     
