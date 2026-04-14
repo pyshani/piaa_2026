@@ -75,23 +75,44 @@ int main() {
 
     if (log_flag) {
         log << "Финальное расстояние = " << dp[n][m] << "\n";
+        log << "Восстановление пути: \n";
     }
-    log.close();
 
     std::string ops;
     int i = n, j = m;
     while (i > 0 || j > 0) {
         if (i > 0 && j > 0 && A[i - 1] == B[j - 1] && dp[i][j] == dp[i - 1][j - 1]) {
             ops.push_back('M');
+            if (log_flag) {
+                log << "A[i - 1] == B[j - 1] " << A[i - 1] << " == " << B[j - 1] << 
+                " dp[i][j] == dp[i - 1][j - 1] " << dp[i][j] << " == " <<  dp[i - 1][j - 1] << "\n" << 
+                "i--; j--;" << "\n";
+                log << "M" << "\n";
+            }
             i--; j--;
         } else if (i > 0 && j > 0 && dp[i][j] == dp[i - 1][j - 1] + costR) {
             ops.push_back('R');
+            if (log_flag) {
+                log << "dp[i][j] == dp[i - 1][j - 1] + costR " << dp[i][j] << " == " << dp[i - 1][j - 1] + costR << "\n" 
+                << "i--; j--;" << "\n";
+                log << "R" << "\n";
+            }
             i--; j--;
         } else if (j > 0 && dp[i][j] == dp[i][j - 1] + costI) {
             ops.push_back('I');
+            if (log_flag) {
+                log << "dp[i][j] == dp[i][j - 1] + costI " << dp[i][j] << " == " <<  dp[i][j - 1] + costI << "\n" 
+                << "j--;" << "\n";
+                log << "I" << "\n";
+            }
             j--;
         } else if (i > 0 && dp[i][j] == dp[i - 1][j] + costD) {
             ops.push_back('D');
+            if (log_flag) {
+                log << "dp[i][j] == dp[i - 1][j] + costD " << dp[i][j] << " == " <<  dp[i - 1][j] + costD << "\n" 
+                << "i--;" << "\n";
+                log << "D" << "\n";
+            }
             i--;
         }
     }
@@ -100,6 +121,8 @@ int main() {
     std::cout << ops << std::endl;
     std::cout << A << std::endl;
     std::cout << B << std::endl;
+
+    log.close();
 
     return 0;
 }
