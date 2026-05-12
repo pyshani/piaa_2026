@@ -32,6 +32,7 @@ char idx_to_char(int i) {
 }
 
 struct Node {
+    int id;
     Node* son[ALPHABET_SIZE];
     Node* go[ALPHABET_SIZE];
     Node* parent;
@@ -42,6 +43,8 @@ struct Node {
     vector<int> leafPatternNumber;
 
     Node() {
+        static int counter = 0; 
+        id = counter++;         
         memset(son, 0, sizeof(son));
         memset(go, 0, sizeof(go));
         parent = nullptr;
@@ -128,12 +131,6 @@ int main(int argc, char* argv[]) {
     cin.tie(nullptr);
 
     bool logflag = false;
-    for (int i = 1; i < argc; ++i) {
-        if (strcmp(argv[i], "--logflag") == 0) {
-            logflag = true;
-            break;
-        }
-    }
 
     ofstream logfile;
     if (logflag) {
@@ -208,7 +205,7 @@ int main(int argc, char* argv[]) {
 
         if (logfile.is_open()) {
             logfile << "  позиция " << j + 1 << " символ '" << c
-                    << "' -> переход " << prev << " -> " << cur << endl;
+                    << "' -> переход " << prev->id << " -> " << cur->id << endl;
         }
 
         Node* tmp = cur;
